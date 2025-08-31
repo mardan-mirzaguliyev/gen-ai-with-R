@@ -1,0 +1,1 @@
+Tutorial Series by Alber Rapp using R to interact with Generative AI models.
