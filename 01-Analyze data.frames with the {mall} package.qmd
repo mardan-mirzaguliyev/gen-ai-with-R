@@ -59,6 +59,7 @@ library(ollamar)
 
 ```{r}
 # pull("llama3.2")
+pull("llama3.1")
 ```
 
 # Step 7. Load the `mall` package
@@ -107,7 +108,7 @@ tibble(fruit = fruit[1:5]) |>
 ```{r}
 llm_use(
   backend = "ollama",
-  model = "gpt-oss",
+  model = "llama3.1:8b",
   seed = 1337,
   temperature = 0)
 ```
