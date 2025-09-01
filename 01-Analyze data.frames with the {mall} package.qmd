@@ -1,0 +1,119 @@
+---
+title: "AI Data Science with R: Analyze data.frames with {mall} package"
+format: html
+author: Mardan Mirzaguliyev
+date: 2025/09/01
+---
+
+# Step 1. Download Ollama
+
+-   Follow the link to donwload Ollama:
+
+    -   https://ollama.com/download
+
+# Step 2. Check if Ollama is running
+
+-   Mac:
+
+    -   Write in the Terminal: `curl http://localhost:11434`
+
+-   Linux:
+
+    -   Write in the Terminal: `ollama`
+
+-   Windows:
+
+    -   `ollama serve`
+
+# Step 3. List downloaded Ollama LLMs
+
+-   Mac:
+
+    -   Write in Terminal: `ollama list`
+
+-   Linux:
+
+    -   Write in the Terminal: `ollama list`
+
+-   Windows:
+
+    -   Write in the Terminal: `ollama list`
+
+# Step 4. Install `mall` package
+
+-   `install.packages("mall")`
+
+# Step 5. Load `ollamar` package
+
+-   `ollamar` package is installed together with `mall` package
+
+```{r}
+#|label: load the ollamar package
+
+library(ollamar)
+```
+
+# Step 6. Download model from Ollama website
+
+-   Comment out or copy paste to RStudio Console
+
+```{r}
+# pull("llama3.2")
+```
+
+# Step 7. Load the `mall` package
+
+```{r}
+library(mall)
+```
+
+# Step 8. Specify what model to use
+
+```{r}
+llm_use(backend = "ollama",
+       model = "llama3.2")
+```
+
+# Step 9. Sentiment Analysis
+
+```{r}
+library(tibble)
+```
+
+```{r}
+tib <- tibble(id = 1:4,
+  adjective = c("painful", "hungry", "cheerful", "exciting"))
+```
+
+```{r}
+tib |> 
+  llm_sentiment(adjective)
+```
+
+# Step 10. Classification
+
+```{r}
+library(stringr)
+```
+
+```{r}
+tibble(fruit = fruit[1:5]) |> 
+  llm_classify(fruit,
+               labels = c("red", "green", "blue", "yellow"))
+```
+
+## 10.1 Use another model
+
+```{r}
+llm_use(
+  backend = "ollama",
+  model = "gpt-oss",
+  seed = 1337,
+  temperature = 0)
+```
+
+```{r}
+tibble(fruit = fruit[1:5]) |> 
+  llm_classify(fruit,
+               labels = c("red", "green", "blue", "yellow"))
+```
