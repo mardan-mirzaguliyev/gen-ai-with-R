@@ -1,0 +1,21 @@
+---
+title: "Use ChatGPT, Mistral and ollama for Text Processing in R"
+author: "Mardan Mirzaguliyev"
+format: html
+editor: visual
+date: 2025/09/02
+---
+
+```{r}
+library(tidyverse)
+library(devtools)
+library(dotenv)
+```
+
+```{r}
+install_github("AlbertRapp/tidychatmodels")
+```
+
+```{r}
+library(tidychatmodels)
+```
