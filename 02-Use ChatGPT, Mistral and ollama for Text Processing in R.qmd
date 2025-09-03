@@ -6,6 +6,10 @@ editor: visual
 date: 2025/09/02
 ---
 
+# 1. GENERAL STEPS
+
+## 1.1 Install and load libraries
+
 ```{r}
 library(tidyverse)
 library(devtools)
@@ -13,9 +17,270 @@ library(dotenv)
 ```
 
 ```{r}
-install_github("AlbertRapp/tidychatmodels")
+# install_github("AlbertRapp/tidychatmodels")
 ```
 
 ```{r}
 library(tidychatmodels)
+```
+
+## 1.2 Load the text files into R
+
+```{r}
+subtitle_httr2_guide <- read_lines("httr2-guide.txt") |> 
+  paste(collapse = " ")
+
+subtitle_posit_conf <- read_lines("positconf-talk.txt")
+```
+
+## 1.3 Load environment file to the session
+
+```{r}
+load_dot_env(".env")
+```
+
+# 2. Open AI Chat
+
+## 2.1 Load Open AI API key to the session
+
+```{r}
+Sys.getenv("oai_api_key")
+```
+
+## 2.2 [`httr2 guide subtitle`](https://www.youtube.com/watch?v=hmtE4QGIOuk)
+
+### 2.2.1 Send data to ChatGPT and specify the model
+
+```{r}
+oai_chat_httr2 <- create_chat(vendor = "openai",
+            api_key = Sys.getenv("oai_api_key")) |> 
+  add_model("gpt-3.5-turbo") |> 
+  add_message(role = "system",
+              message = "You are a helpful subtitle summarizer.
+              Your goal is to summarize YouTube subtitles into 5 takeways.
+              You receive subtitles and return a summary in the following form:
+              
+              TAKEWAY 1: < insert takeway 1 >
+              TAKEWAY 2: < insert takeway 2 >
+              TAKEWAY 3: < insert takeway 3 >
+              TAKEWAY 4: < insert takeway 4 >
+              TAKEWAY 5: < insert takeway 5 >") |> 
+  add_message(role = "user",
+              message = subtitle_httr2_guide) |> 
+  add_params(temperature = 0.2) |> 
+  perform_chat()
+```
+
+### 2.2.2 Extract the message
+
+```{r}
+oai_chat_httr2 |> extract_chat()
+```
+
+### 2.2.3 Remove user message
+
+```{r}
+oai_msgs_httr2 <- chat |> extract_chat(silent = TRUE)
+```
+
+### 2.2.4 Check the actual response
+
+```{r}
+oai_msgs_httr2$message[3] |> cat()
+```
+
+## 2.3 [`posit::conf(2023)`](https://www.youtube.com/watch?v=Maxz3wLBQQw&t=89s&ab_channel=PositPBC) data 
+
+### 2.3.1 Send data to ChatGPT and specify the model
+
+```{r}
+oai_chat_posit_conf <- create_chat(vendor = "openai",
+            api_key = Sys.getenv("oai_api_key")) |> 
+  add_model("gpt-3.5-turbo") |> 
+  add_message(role = "system",
+              message = "You are a helpful subtitle summarizer.
+              Your goal is to summarize YouTube subtitles into 5 takeways.
+              You receive subtitles and return a summary in the following form:
+              
+              TAKEWAY 1: < insert takeway 1 >
+              TAKEWAY 2: < insert takeway 2 >
+              TAKEWAY 3: < insert takeway 3 >
+              TAKEWAY 4: < insert takeway 4 >
+              TAKEWAY 5: < insert takeway 5 >") |> 
+  add_message(role = "user",
+              message = subtitle_posit_conf) |> 
+  add_params(temperature = 0.2) |> 
+  perform_chat()
+```
+
+### 2.3.2 Extract the message
+
+```{r}
+chat_posit_conf |> extract_chat()
+```
+
+### 2.3.3 Remove user message
+
+```{r}
+msgs_posit_conf <- chat_posit_conf |>
+  extract_chat(silent = TRUE)
+```
+
+### 2.3.4 Check the actual response
+
+```{r}
+msgs_posit_conf$message[3] |> cat()
+```
+
+### 2.3.5 Add more messages
+
+```{r}
+msgs_posit_conf <- chat_posit_conf |> 
+  add_message(
+    role = "user",
+    message = "Make the takeways more concise"
+  ) |> perform_chat() |> 
+  extract_chat()
+```
+
+### 2.3.6 Remove user message
+
+```{r}
+msgs_posit_conf <- chat |> extract_chat(silent = TRUE)
+```
+
+### 2.3.7 Check the actual response
+
+```{r}
+msgs_posit_conf$message[3] |> cat()
+```
+
+# 3. Mistral AI Chat
+
+## 3.1 [`posit::conf(2023)`](https://www.youtube.com/watch?v=Maxz3wLBQQw&t=89s&ab_channel=PositPBC) data 
+
+### 3.1.1 First attempt raised the error: **Error in** `httr2::req_perform()`**:** ! HTTP 422 Unprocessable Entity. I get this error for mistral ai api
+
+### 3.1.2 Test with minimal request
+
+```{r}
+# Minimal test
+test_chat <- create_chat(vendor = "mistral",
+                        api_key = Sys.getenv("mistral_api_key")) |> 
+  add_model("mistral-large-latest") |> 
+  add_message(role = "user", message = "Hello") |> 
+  perform_chat()
+```
+
+### 3.1.3 Format data to make it appropriate for the model
+
+```{r}
+# Combine lines into a single string
+subtitle_posit_conf <- paste(subtitle_posit_conf, collapse = " ")
+
+# Basic cleaning
+subtitle_posit_conf <- gsub("\\s+", " ", subtitle_posit_conf)  # Replace multiple spaces with single space
+subtitle_posit_conf <- trimws(subtitle_posit_conf)  # Remove leading/trailing whitespace
+subtitle_posit_conf <- gsub("[\r\n]+", " ", subtitle_posit_conf)  # Replace newlines with spaces
+
+print(paste("Text length:", nchar(subtitle_posit_conf)))
+```
+
+### 3.1.4 Send data to Mistral AI and specify the model
+
+```{r}
+mistral_chat_posit_conf <- create_chat(vendor = "mistral",
+            api_key = Sys.getenv("mistral_api_key")) |> 
+  add_model("mistral-large-latest") |> 
+  add_message(role = "system",
+              message = "You are a helpful subtitle summarizer.
+              Your goal is to summarize YouTube subtitles into 5 takeways.
+              You receive subtitles and return a summary in the following form:
+              
+              TAKEWAY 1: < insert takeway 1 >
+              TAKEWAY 2: < insert takeway 2 >
+              TAKEWAY 3: < insert takeway 3 >
+              TAKEWAY 4: < insert takeway 4 >
+              TAKEWAY 5: < insert takeway 5 >") |> 
+  add_message(role = "user",
+              message = subtitle_posit_conf) |> 
+  add_params(temperature = 0.2) |> 
+  perform_chat()
+```
+
+### 3.1.5 Extract the message, remove user message
+
+```{r}
+mistral_chat_posit_conf_msgs <- mistral_chat_posit_conf |> 
+  extract_chat(silent = TRUE)
+```
+
+### 3.1.6 Check the actual response
+
+```{r}
+mistral_chat_posit_conf_msgs$message[3] |> 
+  cat()
+```
+
+### 3.1.7 Add more messages, extract the message, remove user message
+
+```{r}
+mistral_chat_posit_conf_msgs <- mistral_chat_posit_conf |> 
+  add_message(
+    role = "user",
+    message = "Make the takeways more concise"
+  ) |> perform_chat() |> 
+  extract_chat(silent = TRUE)
+```
+
+### 3.1.8 Check the actual response
+
+```{r}
+mistral_chat_posit_conf_msgs$message[3] |> cat()
+```
+
+# 4 Ollama AI Chat
+
+4.1 [`posit::conf(2023)`](https://www.youtube.com/watch?v=Maxz3wLBQQw&t=89s&ab_channel=PositPBC) data
+
+-   `ollama pull llama2`
+
+### 4.1.1 Send data to Ollama and specify the model
+
+```{r}
+ollama_chat_posit_conf <- create_chat(vendor = "ollama") |> 
+  add_model("llama2") |> 
+  add_message(role = "system",
+              message = "You are a helpful subtitle summarizer.
+              Your goal is to summarize YouTube subtitles into 5 takeways.
+              You receive subtitles and return a summary in the following form:
+              
+              TAKEWAY 1: < insert takeway 1 >
+              TAKEWAY 2: < insert takeway 2 >
+              TAKEWAY 3: < insert takeway 3 >
+              TAKEWAY 4: < insert takeway 4 >
+              TAKEWAY 5: < insert takeway 5 >") |> 
+  add_message(role = "user",
+              message = subtitle_posit_conf) |> 
+  add_params(temperature = 0.2) |> 
+  perform_chat()
+```
+
+### 4.1.2 Extract the message
+
+```{r}
+ollama_chat_posit_conf |> extract_chat()
+```
+
+### 4.1.3 Remove user message
+
+```{r}
+ollama_msgs_posit_conf <- ollama_chat_posit_conf |>
+  extract_chat(silent = TRUE)
+```
+
+### 4.1.4 Check the actual message
+
+```{r}
+ollama_msgs_posit_conf$message[3] |> cat()
 ```
