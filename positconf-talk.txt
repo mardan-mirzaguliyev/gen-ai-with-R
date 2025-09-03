@@ -1,0 +1,833 @@
+hi welcome to my talk my name is Alber r
+
+i Am A freelancer and A content creator
+
+you may have seen some of my content on
+
+YouTube or Twitter on my main job I am a
+
+math PhD student focusing on probability
+
+Theory but I assure you that today we
+
+are definitely not talking about
+
+mathematics today I want to show you how
+
+to combine HTML and CSS with popular art
+
+tools that you may already use to create
+
+even more beautiful outputs than we
+
+already have with the tools we want so
+
+you may be wondering why is a
+
+mathematician talking about things like
+
+making more beautiful designs making
+
+better tables with GT having a nicer
+
+plot um talking about things like design
+
+so let me tell you how I ended up here
+
+and how the idea for this talk came to
+
+be as a PhD student I also have to teach
+
+and at some point I add that time I felt
+
+like I was getting stuck with the r
+
+course and not with the math course so
+
+um I was sort of getting stuck with
+
+having to teach r i ass you now I would
+
+be very glad about this but at that time
+
+I felt like I was kind of getting the
+
+short end of the
+
+stick but I decided to make the best out
+
+of it so I uh decided to read R for data
+
+science which I am sure all of you have
+
+read and I just learned a lot from it
+
+and one of the things that I found very
+
+striking was that it starts out with
+
+data visualization the very first
+
+chapter teaches you GG plot and to me it
+
+was fascinating how just the very basic
+
+GG plot call that you learn like in the
+
+first page of that chapter was already
+
+creating a plot that was much nicer than
+
+what I could have possibly created at
+
+that time so we will see in this talk
+
+that this is a recurring theme we have
+
+very great tools that can help you to
+
+create very nice outputs all from within
+
+a couple of lines
+
+okay so this is how I started ending up
+
+with data visualization I wanted to
+
+learn more and I kind of went down a
+
+rabbit hole learn more about it and once
+
+you start learning about data Vis you
+
+see other people's work as well and here
+
+I've brought a data Vis from John burn
+
+Murdoch who's creating visualizations
+
+from the financial times and if you
+
+don't know his work you should
+
+definitely check it out he creates
+
+beautiful plots and what I found most
+
+interesting about this particular chart
+
+is that instead of using a legend like a
+
+typical Legend on the right hand side of
+
+the plot to indicate which color means
+
+what instead it highlights single words
+
+and colorizes them for example in a
+
+title you can see that the word British
+
+cities is colored in red and to indicate
+
+that the red dots mean British cities so
+
+I thought well can I do this in ggplot
+
+to and so I set out and tried to create
+
+a scatter plot first using the very
+
+famous Palmer penguins and this is like
+
+a very nice plot that I created with
+
+ggplot it's a decent plot ggplot is a
+
+very fancy tool to make these kind of
+
+things but this was not what I set out
+
+to do I wanted to have the colors not on
+
+the right hand side but in the title so
+
+the question is can we do this with NG
+
+plot and the answer is yeah we can
+
+actually do that but we have to invoke
+
+an extra package that's called GG text
+
+so at this point you are asking probably
+
+okay what's the story with HTML and CSS
+
+now right you we have been saying all of
+
+this was done in R but if you are
+
+looking at what you have to do to make
+
+this happen even though we are using our
+
+code what you need to do is to wrap the
+
+words that you want to highlight into
+
+these span Texs and inside of these span
+
+Texs you have to set the color to some
+
+hex code that you want to use so really
+
+this is HTML and CSS these span Texs
+
+that's HTML and the style instruction
+
+inside of it that's CSS and even though
+
+we could get very far to accomplish our
+
+goal with just within R we have been
+
+great tool for that we had to Sparkle in
+
+a little bit of HTML and CSS to make
+
+this happen and the very nice thing is
+
+that it isn't actually that hard to make
+
+this work right if you can create a
+
+scatter plot with GG plot like that then
+
+you certainly won't have any trouble to
+
+set like the words into span text and
+
+then throw in a couple of keywords and
+
+we will see that this is a recurring
+
+theme within with the tools that we like
+
+to
+
+use so I have mentioned that you can add
+
+a little bit of HTML and CSS to your
+
+data visualizations with ggplot but it's
+
+also true for other very popular tools
+
+and this is what I've noticed it's true
+
+for tables with GT it's true for reports
+
+and slides with qual and it's true for
+
+dashboards that you create with shiny
+
+all of these packages or tools are gr
+
+out of the box they can they can create
+
+beautiful outputs and we can get very
+
+far all from within that tool that you
+
+use but if you want to make something
+
+unique if you want to make something a
+
+little bit special like having the
+
+colors in the title instead then you
+
+need to add a little bit of HTML and CSS
+
+to it I like to compare this to building
+
+houses you can create or can build a
+
+very nice a very solid home all with an
+
+R nothing wrong about that but if you
+
+want to add build something very special
+
+want to have something very fancy then
+
+you will you are kind of forced to add a
+
+little bit of HTML and CSS to it but
+
+really the point that I want to make
+
+here is that just with the data
+
+visualization where you only had to
+
+throw in these span Texs it isn't that
+
+hard once you at the point that you can
+
+already create the nice home so the
+
+transition using the HTML and CSS isn't
+
+that
+
+hard to prove my point let's look at a
+
+couple more examples here's a table that
+
+I have created with GT once again and
+
+it's a very amazing tool that we have at
+
+our disposal GT can make a very nice
+
+table here it's a solid table it shows a
+
+couple of measurements from the penguin
+
+data set and it even has like a little
+
+chart in there to visualize the
+
+distribution of the penguin weights and
+
+even though this is an neat table it may
+
+be a bit boring it's just plain black
+
+and white and you may need to draw your
+
+reader's attention to that specific
+
+table that you have so you might want to
+
+throw in a little bit of color in there
+
+add like a linear gradient to make
+
+things look fancy just to grab your
+
+reader attention and the same story is
+
+here happening again basically this was
+
+all done in GT but to make this happen
+
+you created your table in R and then
+
+passed this to some overlay in this case
+
+it's called op CSS where you stick in
+
+CSS code to make the final changes that
+
+you want and again the story here is
+
+that the part that is highlighted is
+
+only a couple of keywords that are
+
+pretty hard to pretty easy to understand
+
+I I mean I will guess that you won't
+
+have any trouble understanding what
+
+border top with does when you set it to
+
+one pixel right the only thing that may
+
+might be a little bit Troublesome is the
+
+things that are gr out here these are
+
+the description of where you want to
+
+apply your Styles but the cool thing
+
+about this is that usually you don't
+
+have to write these things yourself you
+
+just have to figure out where to look
+
+and then you copy and paste the thing
+
+and throw that in there so this is how I
+
+made this thing I mean I just copy and
+
+pasted the descriptions and then I set
+
+the keywords to what I want and the
+
+keywords are easily Googled if you want
+
+to figure out what changes the
+
+background in CSS you Google just that
+
+and you see that background will do the
+
+job same thing is true in chiny in chiny
+
+you can just throw in a couple of
+
+keywords to a lot of UI elements to make
+
+your user interface look different and
+
+once you're comfortable with using these
+
+nice and easy keyword value pairs you
+
+can start to use more complex stuff from
+
+CSS like the grid alignment to like take
+
+your UI elements that you have from
+
+within shiny and arrange that on a grid
+
+here that's how I created the shiny app
+
+this little habit tracker and basically
+
+this is how I leverage CSS here to get
+
+the job done and finally we have quto
+
+which I like to call a web development
+
+gateway
+
+drug it it it really is true it's all a
+
+quook generates so much great output for
+
+you out of the box and a lot of times
+
+that's HTML and CSS and then you're
+
+thinking okay I want to change this tiny
+
+thing to make the theme similar to what
+
+I want and then you're like hooked you
+
+want to like figure out how do I do this
+
+and this is really how you end up
+
+learning more about HTML and CSS and
+
+this is how I ended up there too and the
+
+very cool thing is that quo is a great
+
+place to learn the HTML and CSS because
+
+it already generates all of the code for
+
+you you just have to figure out where to
+
+look once you know that you can copy and
+
+paste most of the code from there and
+
+change the values to what you want if it
+
+says background is white copy and paste
+
+it and set background to Blue if that's
+
+what you need so with that you can get
+
+very far and the thing about quto is
+
+that for example if you create slides
+
+like these you can do things like in
+
+little chunks for example you could
+
+interpret every slide as a little web
+
+development project and do some fancy
+
+stuff there here I definitely want to
+
+mention that this theme isn't by me it
+
+is great but it is uh from Emil I
+
+borrowed that he will speak about
+
+probably more amazing quar of themes uh
+
+just uh after me and this saying of
+
+every slide is a little web development
+
+project is something I have picked up
+
+from Garrick Aden Buie who also stressed
+
+this point so it's it's not an new idea
+
+but it is worth repeating that you can
+
+like start working on very small project
+
+to easier way into the HTML and CSS
+
+world so this backs the question how do
+
+we actually start with that I gave you a
+
+couple of examples and showed you like
+
+after the fact this is how it was done
+
+but how do we figure out these things
+
+and again quto is the base for us our
+
+users or qu to users it's the best way
+
+to start out because most of the things
+
+are already done for us and in this case
+
+you can use so-called scss variables to
+
+just throw in a scss so-called scss file
+
+into your quter document set the theme
+
+to that file it really is just a text
+
+file that you rename to something
+
+something. sccss and then you have an
+
+scss file and in there you can use uh as
+
+I said scss variables and set them to
+
+very specific values this is this is
+
+really the easiest way you can style a
+
+lot of your qu to outputs by figuring
+
+out what the couple of keywords are that
+
+you want to use here the first three
+
+keywords are the primary and secondary
+
+and thary color and I've just set them
+
+to some hex code and by just setting
+
+this in this scss file you can
+
+immediately transform the output of your
+
+quoto file basically the theme is
+
+changed then and the same thing could be
+
+done for the code background or the code
+
+chunk uh background color
+
+and so on so you really have to figure
+
+out what is the keyword that I need and
+
+then you set it to some value and
+
+thankfully the quter documentation is
+
+pretty solid on that part you can just
+
+go to the quter website look for the zus
+
+variables scss and S are kind of the
+
+same thing and there you will see the
+
+most important variables and their names
+
+are kind of
+
+self-explanatory and then set that to
+
+some value that you want so that's
+
+basically the easy easy route to easier
+
+way into HTML and CSS with Quon and once
+
+you go want to go wild you once you
+
+cannot do something with the basic scss
+
+variables to make the changes that you
+
+want then it becomes time to look at the
+
+actual HTML and CSS code that quarter
+
+generates for you and on any website you
+
+can do this you can just take your web
+
+browser write click
+
+anywhere uh drop down menu will appear
+
+and then you can navigate to inspect
+
+just imagine that there is inspect and
+
+not the German a word for it and then
+
+you would uh know what you have to
+
+click I deliberately not clicked inspect
+
+right now because honestly this part is
+
+scary once you open it up the web
+
+developer view will immediately show up
+
+and you will see a bunch of stuff you
+
+will see the HTML all the CSS and a
+
+thousand other tools I have never use or
+
+I don't even know what they do honestly
+
+but really it opens so many things and
+
+you need need someone to kind of guide
+
+you through it but once you have that
+
+part the strategy to like make the
+
+changes that you want to learn HTML and
+
+CSS is pretty straightforward inspect
+
+all the things that you want to change
+
+this will immediately put you to the
+
+HTML and CSS code that generates that
+
+output copy and paste that stuff into
+
+your scss
+
+file and then simply change the values
+
+to that what you need so as I said you
+
+kind of need someone to guide you
+
+through it you could of course try this
+
+at home and just uh click inspect and
+
+see what's happening but it's always
+
+easy to have someone show you where to
+
+look how it works and once that is done
+
+it's like a 10minute intro then you know
+
+how to operate with these three steps
+
+but then it really is as easy as I've
+
+said copy and paste most of the things
+
+and add the values after the fact and
+
+that's why I decided to actually make
+
+such an introduction because because I
+
+cannot do this here would make too much
+
+would take too much time so this is why
+
+uh you will find on YouTube a quarto
+
+themes guide for HTML and CSS snoops
+
+that guides you through that this is
+
+actually part two part one will um show
+
+you more details on the first part that
+
+I have mentioned with the scss variables
+
+so you can start with part one check out
+
+how far you can go with there and then
+
+use part two to see how much you can get
+
+done with the we developer View and with
+
+that thank you for coming for my talk
+
+and I'm happy to answer any questions
+
+that you
+
+have thank you we have indeed time for
+
+qu uh time for questions I was much
+
+faster than I practiced so first
+
+question have you dipped at all into
+
+JavaScript for enhancing your
+
+apps yeah but this is like a scary world
+
+I I I mean I have dipped into it and it
+
+is very very fascinating what you can do
+
+um but I feel like the easier way to all
+
+the things you want to change for style
+
+HTML and CSS or
+
+enough uh what are the limitations of
+
+HTML and CSS in the r
+
+context like if I can't ask questions
+
+back I guess so I don't think there are
+
+any limitations I mean basically all the
+
+websites in the world that you see are
+
+built on HTML and CSS and you can see
+
+varieties of websites and I don't think
+
+there's like imagination is the limit
+
+for HTML and CSS I guess the only thing
+
+that might be like in the r context be
+
+specific is um for example the GG text
+
+example it doesn't accept all style
+
+instructions it only accepts those that
+
+were implemented in that kind of
+
+scenario there is truly is a limit then
+
+you would have to figure like some heck
+
+something out so the G so the GG text
+
+output that works not only in HTML
+
+output right so that output can be
+
+that's any gig plot which you can save
+
+into a PDF file I mean at the end it
+
+generates a image file and the way that
+
+you need to instruct to make the changes
+
+is via HTML and CSS code I'm not 100%
+
+sure what GG text does behind the scenes
+
+with that instruction but you have to
+
+use that language to instructed to do it
+
+right right another question what is a
+
+good way to share your new quarto themes
+
+with others so I guess if you modify you
+
+know a document maybe you want to do
+
+that again to another document to use
+
+the same theme or same style I mean
+
+honestly we would share it I personally
+
+would share it like I would share all
+
+things via GitHub repository the slide
+
+that I showed from Emil here that's how
+
+I got it I knew Emil shared his themes
+
+on cour on GitHub I just went there and
+
+looked into this scss file and then put
+
+that into my scss file so you just need
+
+to share the scss files basically that's
+
+the theme B basically and all the
+
+resources that you want to have for
+
+example in this very specific case there
+
+are also images these are all images
+
+then you also need the image file for
+
+that of course thank you you're
+
+[Applause]
+
+welcome
+
+

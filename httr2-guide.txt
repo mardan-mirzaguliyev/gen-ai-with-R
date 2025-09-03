@@ -1,0 +1,2315 @@
+web apis are everywhere and making
+
+requests to them is often a necessary
+
+part in a data analysis to even get the
+
+data in the first place and in the age
+
+of AI you will also need to make API
+
+requests to talk to a GPT like chat GPT
+
+in an automated way through API requests
+
+welcome everyone my name is IAD and in
+
+this video I'm going to show you how to
+
+communicate with apis from withr you see
+
+apis are everywhere and they can give
+
+you a lot of data but if you don't know
+
+how to commun communicate with them it
+
+can certainly feel like the data is
+
+hidden behind the layer where you don't
+
+have any clue how to get to it but with
+
+the HTTR 2 package the workflow to get
+
+to the data through the API is actually
+
+always the same regardless of the API
+
+and in this video I'm going to give you
+
+a detailed guide how to operate this
+
+package so that you can finally get to
+
+your data through apis all right in
+
+level one we are going to make a request
+
+to the US national WEA service to get a
+
+WEA forecast for a specific location and
+
+in my quto file I've already sketched
+
+out the workflow that the HTTR 2 package
+
+requires so that we can make a request
+
+to an API the principle is always the
+
+same first you will have to load the
+
+package of course and then you will have
+
+to use the request function where you
+
+stick in a base URL in our case we will
+
+throw in a URL from the US national we
+
+service which is specifically the API
+
+URL so that we can make requests to that
+
+URL that's what the request function
+
+needs and then we pass that object to
+
+some request underscore function there
+
+are a whole bunch of functions like this
+
+for all kinds of use cases and we'll see
+
+a couple of them but the point of this
+
+just like in ggplot where you use gmor
+
+point or gmor line to use the geometric
+
+objects that you need you will use these
+
+request underscore functions to make the
+
+request appropriate to what an API needs
+
+and then once you've assembled
+
+everything through this process you can
+
+actually make the request and this will
+
+give you a response which you save into
+
+a variable and then you can evaluate
+
+this response via a response function
+
+depending on what you get back from the
+
+API so this was a high level overview
+
+over how to make an request to an API
+
+and broadly speaking this also tells you
+
+what an API even is it is something that
+
+you can address somehow throw some code
+
+at it and get stuff back and the magic
+
+of communicating with apis is making
+
+sure that what you throw at it is in the
+
+format that it likes that's why the
+
+workflow isn't there to make this as
+
+easy as possible and then untangle what
+
+the API gives you back and this is why
+
+you need a function to untangle the mess
+
+that you get back so now let's make this
+
+more specific with the US national we
+
+service you see if you Google for API US
+
+national we service or something you
+
+will get to website that looks like this
+
+it isn't very pretty but it tells you
+
+the URL that you need to communicate
+
+with the API for a specific location
+
+there's even an example URL here and and
+
+the cool thing about this API is is that
+
+you can sort of make the request
+
+manually you see if you follow this link
+
+you will actually get the response back
+
+inside of your browser this is a whole
+
+lot of gibberish and this is what I mean
+
+by you have to figure out how to
+
+untangle the stuff that is given to you
+
+by the API some things you can make out
+
+here for example is the geometry for
+
+example this is the coordinates of the
+
+point we're looking at and if we look in
+
+here we also see that it has some
+
+property which is called forecast hourly
+
+and then we could follow this URL here
+
+and if we put this into our web browser
+
+we get even more stuff back and then if
+
+we scroll all the way down here we see
+
+that there seem to be forecast for
+
+specific points in time so this was kind
+
+of the making IE requests manually and
+
+usually you cannot do this because you
+
+have to use some other steps in between
+
+like authentication but with this API
+
+it's kind of neat that you get to see
+
+this whole process manually so now let
+
+us try to figure out how to make this
+
+happen with the HTTR 2 package back on
+
+the website we have seen that we got
+
+this URL here so let's copy this and go
+
+back to our studio and now let us set up
+
+a new variable let's call it base URL
+
+and throw the URL in there and what you
+
+can see in this URL is that the base URL
+
+is basically this part here and all the
+
+things that we have on top of that where
+
+we need to stick in stuff like the
+
+latitude and longitude so basically the
+
+coordinates of the place we want to look
+
+at we have to stick this in there and
+
+depending on what you stick in there you
+
+get other results back if you look at
+
+our example from before you see that in
+
+there were a couple of coordinates
+
+already set as an example so what we
+
+could do is to set this part here as the
+
+base URL for our request and then maybe
+
+there is a request function that
+
+autofills these things for us so that we
+
+can stick in latitude and longitude
+
+depending on what we need so let's try
+
+to make some space here let's actually
+
+make this in new code chunk and let's
+
+stick this into request first if we
+
+execute just this part here we see that
+
+what we get as a result is an hiter to
+
+request and it makes a so-called get
+
+request to the API we specified but this
+
+still contains the part that we actually
+
+do not have as part of the base URL so
+
+for now let us get rid of this and see
+
+how this changes the result okay it
+
+seems to have just modified the URL in
+
+here what we can do now is to take this
+
+request and pass it to the request URL
+
+path append function so that we append
+
+further parts to the URL so we first
+
+want to append the points and then we
+
+want to append latitude and longitude
+
+let's actually fill in the numbers from
+
+the example from before and now if we
+
+execute this part we see that the URL
+
+became exactly what we put in there and
+
+now we have the option of replacing this
+
+part here with some variables that might
+
+depend on the data analysis that we want
+
+to run for example we could put in the
+
+the coordinates for different points in
+
+the US to get different kinds of we
+
+forecasts so the idea is clear and
+
+really we notice that in our web browser
+
+we didn't need anything but this URL so
+
+we don't even need to modify our request
+
+any further via additional request
+
+layers we can just perform the request
+
+and if we do that we get a status 200
+
+okay which means that we got stuff back
+
+and let's save this into let's call this
+
+National we service response and just to
+
+make the Nam line a bit better let's
+
+call this National WEA service based URL
+
+okay the results still stay the same now
+
+we have to figure out how to extract the
+
+mess that we have seen before if you
+
+recall we got something back that looks
+
+like this with a lot of nested stuff in
+
+it and this is what is known as a Json
+
+format which stands for JavaScript
+
+object notation it doesn't really matter
+
+what it stands for the point is this is
+
+an ugly format but this is just a
+
+standard so we have to live with it
+
+thankfully we have already seen here
+
+that we can throw the response to
+
+response function so let's just do that
+
+and put in our response that we had in
+
+there and now what we get back is M that
+
+we had before that we've seen in our
+
+browser but now we have this as a list
+
+structure inside of our basically and
+
+this really is a mess and working with
+
+apis is really where your data cleaning
+
+skills come out you will have to make a
+
+sense of all of this stuff somehow and a
+
+good way to do that is to use the
+
+Glimpse function
+
+and if you call this you will get an
+
+error because we haven't loaded the Tidy
+
+verse yet so let's do that now and then
+
+we can actually call the Glimpse
+
+function make some room here and this
+
+Glimpse function shows you the structure
+
+of the response or basically of the
+
+nested list and you can see here it is a
+
+list of five and the first list inside
+
+of this list of five is context which is
+
+a list of two and the two columns that
+
+are contained in this are an unnamed one
+
+that has some URL in there a list of 17
+
+that has some other stuff in there and
+
+this is how you can work your way
+
+through this part you might find even in
+
+the geometry coordinates that you have
+
+sticked into this and now to get a
+
+forecast for our location we have to
+
+actually look into the properties and
+
+use the forecast or the forecast hourly
+
+again and follow the URL that is given
+
+there how do I notice well it was
+
+described on the API web page from the
+
+national we service so I mean this page
+
+here here and there it says if you want
+
+to get the hourly forecast use the link
+
+that you get in the response really get
+
+used to reading the API documents
+
+because this is the only way to make
+
+sense of all the moving Parts in an API
+
+and this one here is actually an easy
+
+part it's all you have in here it's the
+
+full description of what you need to do
+
+in later apis you will see that there's
+
+way more going on and this reminds me if
+
+you find this video useful don't forget
+
+to hit the like button because this will
+
+help me feel good about the time I spent
+
+to create this video so thank you for
+
+hitting the like button and let's get
+
+back to the video in any case we want to
+
+extract this URL and the plug function
+
+helps us to do that what we can do here
+
+is to use the plug function and then go
+
+all the way down to the stuff that we
+
+need we see here we need to go into the
+
+properties list and in there we need to
+
+go into the forecast hourly column so
+
+let's stick in the levels that we need
+
+to go through first properties then
+
+forecast hourly and then we get the
+
+result from there so let's save this
+
+into a variable called forecast URL and
+
+then we can make a request like we did
+
+before let's take the same workflow from
+
+before put in the forast URL as a
+
+request we don't actually need to append
+
+anything and then we can perform the
+
+request so once again we can save this
+
+into a variable and with this variable
+
+we can evaluate the response by plugging
+
+this into response body Json and again
+
+we get a highly nested list with a lot
+
+of stuff in it so we first use the
+
+Glimpse function to make sense of this
+
+and we can see here there's a lot of
+
+lists of 16 okay and other than that we
+
+see a bit of properties we see geometry
+
+so I guess let's see what is inside of
+
+these lists of 16 and if you've paid
+
+attention earlier you will probably know
+
+what is inside namely the forecast for
+
+one hour at a time for each hour say
+
+from 9 to 10 you get a forecast with 16
+
+different points and the same thing is
+
+true for the next hour and the next hour
+
+and so on so let's use the plug function
+
+and go into properties properties and
+
+then into periods this is still a mess
+
+so let's plug this into the Glimpse
+
+function and this looks a bit better
+
+could scroll all the way up but it seems
+
+to be repetitive so let's just stay here
+
+this is one list of 16 and it seems like
+
+it contains exactly the data that we've
+
+just discussed it always has a start
+
+time so say 11:00 in this minus 5 hours
+
+time zone and the end time and then it
+
+has stuff like temperatures the
+
+temperature unit probability of
+
+precipitation and since no one can work
+
+with this format we have to extract the
+
+things that we want and we do so by
+
+iterating over the lists of 16 and then
+
+extracting each value one by one so as
+
+I've said what we need to do is to
+
+iterate over these list which means that
+
+we can use a map function to do so in
+
+this case we use the mapor dfr function
+
+which means that the function we need to
+
+stick into this one needs to give us a
+
+row of a tile back and this map D ofr
+
+will then bind these rows together so
+
+that's why we use an anonymous function
+
+that Returns the tible and now we can
+
+specify each column of each tble so to
+
+extract the time we need to extract the
+
+start time here which means that we use
+
+the plug function with the argument
+
+start time to extract this value here
+
+okay so to make sure that you understand
+
+right now we write a function here that
+
+creates a table with one row and the
+
+First Column is called time and in this
+
+column goes the value that you get by
+
+taking the list and sticking it into the
+
+plug function using the star time
+
+argument so this means we iterate over
+
+all of the lists and then each of those
+
+lists we go inside of the star time and
+
+get this value here the same thing can
+
+be done for the temperature and
+
+Fahrenheit you take the list again X
+
+represents the list that you currently
+
+iterating over you stick it in the plug
+
+function and get the temperature so this
+
+means that you get the value that is
+
+inside of this column here you can do
+
+the same thing let me give you a bit of
+
+space here for probability of
+
+precipitation but if you look at this
+
+column here you will see that this is a
+
+list of two and you want to get one
+
+value back so we use plug to go inside
+
+of this and then go inside of the value
+
+column to get this value back so this is
+
+why we use two arguments inside of PLU
+
+un and by this logic we can also get a
+
+short forecast which is something like
+
+mostly sunny and if we execute this then
+
+we get back a nice table that has for
+
+each hour one row with the temperature
+
+and the rain probability forecast and
+
+the overall forecast so this is the part
+
+where I said this is where your data
+
+rankling skills come in because you need
+
+to know a bit about these map functions
+
+to operate this stuff here in a concise
+
+manner and if you wanted to you could
+
+also make sure that this part here right
+
+now it is formatted as a character you
+
+could format this as a datetime column
+
+by using the appropriate function for
+
+that and this way you get daytime
+
+arguments in there which has a bit of
+
+nicer output and you can work with it
+
+nicer don't worry too much if you didn't
+
+get this part here what you should in
+
+any case take away from this is the part
+
+of the workflow to even get the response
+
+how you Wrangle the data later on you
+
+can do that in any way you want but for
+
+getting the data you need to follow the
+
+HTTR 2 workflow for this okay this
+
+concludes level one of our API guide in
+
+level two we want to get one step
+
+further and use of authentication right
+
+now we got a WEA forecast for a place
+
+that is given in coordinates but who in
+
+the world thinks like that mostly
+
+everyone thinks in addresses so we need
+
+something that turns an address to the
+
+coordinates so that we can get we data
+
+for the given address and these kind of
+
+services that do this kind of thing are
+
+called geocoding services and Google has
+
+one of those so we need to figure out
+
+how to call the Google API with respect
+
+to its geocoding service and to do so
+
+you need to go to the Google Maps API
+
+and look for the geocoding API just put
+
+this into Google or follow this link all
+
+of what I explain here is available in
+
+the blog post that corresponds to this
+
+video link for that is in the
+
+description in any case this is the
+
+getting started guide for this API we
+
+want to use and in here you find a URL
+
+that looks like this and if we want to
+
+do the same thing as before we can copy
+
+this code and put this into a web
+
+browser and there we get okay you need
+
+to authenticate each request and this is
+
+why you get a request denied so let us
+
+inspect the URL that we have right now
+
+it seems that there is some URL first
+
+let's think of this as our base URL for
+
+now then comes the question mark and
+
+then comes address equals then some
+
+stuff that looks like the address that
+
+they describe here so I guess this is
+
+the part to make this into URL and then
+
+comes in and and the key equals so the
+
+video player in me has enough evidence
+
+that that this looks like a riddle where
+
+we need to find a key and stick that
+
+into the URL that we see in here and if
+
+we do that then we actually don't get a
+
+request denied but we get something back
+
+this of course backs the question where
+
+do we find the key and once again this
+
+is where the API documents come in handy
+
+and if we scroll up it actually says
+
+before you begin we probably should have
+
+started with that but no one does that
+
+right everyone just skips to the things
+
+he wants to skip to in any case in this
+
+before you begin thing here you can see
+
+that to learn more setup stuff in the
+
+cloud console so I guess this is where
+
+we're headed it looks like there is a
+
+step by step to do for us so let's start
+
+with step one create a new project and
+
+this opens up a new Cloud console where
+
+we have to set up an API so that we can
+
+actually work with the geocoding API
+
+let's call this I don't know we API
+
+tutorial this is what I have used before
+
+for my newsletter where I've already
+
+explained all of this let's call this
+
+whoever recording let's go with that
+
+name so that way I know everything I
+
+show you in here I just delete
+
+everything later on and that way I am
+
+certain that you cannot steal any API
+
+keys from you okay so this brings us to
+
+this page here if you didn't get to this
+
+page first and had to put in some
+
+building information unfortunately this
+
+is something you cannot get around but
+
+all of the stuff with the we API here I
+
+show you is completely free you just
+
+have to put in some information for
+
+authentication you won't get buildt
+
+anything if you do not upgrade to a PID
+
+tier which is something you cannot do by
+
+accident so don't worry about the
+
+building stuff here he in any case we
+
+completed this step let's have a look at
+
+our to-do list okay we created a project
+
+enable building this is what I've just
+
+said enable API okay so we need to
+
+enable the geocoding API and we have to
+
+click on enable Okay it is spinning
+
+until it is enabled okay so now now you
+
+see that an API key was generated and
+
+you need to copy this somewhere so let
+
+me just copy this part here you actually
+
+need to take good care of this and what
+
+I'm doing right now is actually very bad
+
+I'm showing you part of my API key but
+
+I'm doing this in the knowledge that I
+
+will delete this whole project including
+
+the keys later on so there is no
+
+security issue here but I really want to
+
+stress do not share your API key with
+
+anyone okay and also do not stick this
+
+this code into your console or into your
+
+rscript if you share your project later
+
+on on GitHub or something like that then
+
+people can just look into your R console
+
+history and look up the key or they
+
+could just look into the script if you
+
+put it into the script plain text and
+
+this is why I'm showing you a strategy
+
+to avoid all of that and this involves
+
+environment variables so in our studio
+
+let me create a new text file and call
+
+it n Press okay and this will give you a
+
+blank file don't put in an extension
+
+like txt or whatever just call this an
+
+if you have a repository on what you
+
+want to do you put this an file into G
+
+ignore make sure that you commit that
+
+change and then you're good to go you
+
+won't be sharing your API keys by
+
+accident so I trust that you have done
+
+this now I will show you now how to save
+
+your variable inside of a file like this
+
+what you have to do is to Simply come up
+
+with a name usually they're spelled with
+
+capital letters let's call this whoever
+
+API tutorial then you use an equal sign
+
+L and then you just throw in the code
+
+that you have just seen before again
+
+it's very better I show you this here
+
+don't do this at home this is just for
+
+demonstration sake here and if you save
+
+this then you can go back to your script
+
+or in my case a quto file make a new
+
+code chunk and use the N package which
+
+can load the N file you have just done
+
+all you have to provide to this is the
+
+path of this end file if you work from
+
+the same directory just leave it as it
+
+is since I work from other directory I
+
+have to put this in there just ignore
+
+this part and once you have the correct
+
+path inside of that function you can
+
+execute this and in my case it will show
+
+you incomplete final line found one
+
+tricky thing with this is that the file
+
+should end with a complete row so you
+
+need to have a blank row at the bottom
+
+and now if you execute this you don't
+
+get a warning message and in any case
+
+now your variable was loaded into your
+
+environment which means that you could
+
+get your environment variable via the
+
+sis. get n function and in there you
+
+just have to use the name that you have
+
+put in there and I do not want you to
+
+execute this in your console because
+
+once again then the output might be
+
+saved into something that someone could
+
+webscript later on so this is why we
+
+don't execute this now but we are ready
+
+to make a request to the geocoding API
+
+so this means we steal our workflow from
+
+the bottom here stick this in there and
+
+let's call this geoc code response and
+
+this one will be passed to the response
+
+body Json function later on for now we
+
+need to get a geocode base URL and we
+
+get that by the documentation again in
+
+fact we have already seen this before it
+
+was this part here that comes before the
+
+question mark so let's copy this here
+
+and stick this into the variable and
+
+let's use this as our base URL now if we
+
+execute only this part here you can see
+
+that the base URL is just the part that
+
+we have done before for and now we need
+
+to make sure that the stuff that we've
+
+seen before this question mark and the
+
+parameters that we need to add like the
+
+address and a key are added to the
+
+request for that we have to use a
+
+request function let's see what we have
+
+in store let's use the request URL query
+
+because what we have seen with the
+
+question mark and parameters describes
+
+the query so this is the right function
+
+we need and now we can add in the query
+
+parameters in this case this was address
+
+let's set this to some address that is
+
+in Milwaukee little fun fact this refers
+
+to the physics building at WM where I've
+
+studied for one year so a little fun
+
+fact about me in any case this is the
+
+address we're using and for the key that
+
+we need to insert let us use the
+
+variable that we have saved into ourn
+
+file and now if we do not perform the
+
+request but only look at the part that
+
+we have in here then you would see that
+
+this modifies the URL it appends the
+
+address and it also sets the key in here
+
+again you probably don't want to execute
+
+this code because I'm not 100% sure if
+
+this part here gets off fiscated in the
+
+output in your R history so better safe
+
+and sorry do not execute this part I
+
+just wanted to demonstrate this here to
+
+show you what happens to the URL namely
+
+exactly what we need happens all the
+
+parameters are filled in with the stuff
+
+we've sticked inside of it and with that
+
+we can make the request and if we look
+
+at the variable we see once again
+
+there's the address and we get a a stat
+
+is okay in there and with that we can
+
+pass this to the response function again
+
+and since this will be a nested list
+
+let's throw this to Glimpse and in the
+
+results we can actually see that this
+
+refers to the physics building nice but
+
+we wanted to get the coordinates so my
+
+guess is that we have to go into results
+
+go into the first list and then go into
+
+geometry so let's do that results first
+
+then we go into the first entry because
+
+there's another list in here and then we
+
+go into the geometry and we pass this to
+
+Glimpse to have a nicer output and this
+
+is a list again but we can see here that
+
+in the location we have latitude and
+
+longitude so let's extract that VI
+
+another layer inside of the plug call
+
+and we could unlist this and would get
+
+latitude and longitude and then we could
+
+stick this into the coordinates that we
+
+have seen here so that's a way how you
+
+could combine API calls to get an
+
+address to coordinates and then from the
+
+coordinates to the we forecast all right
+
+we have completed level two which means
+
+we can move on to level three where we
+
+do some AI stuff we will make requests
+
+to chat GPT to do so we will have to
+
+look at the API reference of open Ai and
+
+in there you will find a couple of
+
+examples that uses curl and if you
+
+scroll down you will find another
+
+example that also uses curl this is
+
+actually very common because curl is a
+
+popular tool to use the command line
+
+like from Ubuntu to make an API request
+
+like the one we doing from with an R so
+
+you will have to get used to seeing
+
+something like this and I will tell you
+
+how to translate this but I will also
+
+show you a function that can translate
+
+these kind of things for you you see if
+
+you go into R again let's create a new
+
+code chunk and in there you could use
+
+the curl translate function and if you
+
+look into the documentation you see all
+
+kinds of examples there and all of these
+
+are valid Cur requests let's just throw
+
+this in there and that way you can just
+
+execute this Cur translate function and
+
+it shows you how to transform the Cur
+
+request to the HTTR workflow similarly
+
+you could do this for other things that
+
+use some methods or in this case you
+
+could look at something that has
+
+something in the so-called headers you
+
+don't actually need to completely
+
+understand what these headers are it's
+
+just that they are there and if you need
+
+to stick in something that goes into the
+
+header like a is set to one and B is set
+
+to two then it seems that you need to
+
+use the request headers function and set
+
+a to one and B to two and the same thing
+
+is true with the last one where you
+
+could inside of the request perform also
+
+set something like this word here I have
+
+tried this like three times already it's
+
+a hard word to pronounce I have probably
+
+cut this out in the video you are seeing
+
+but in any case this word here you can
+
+set this into in request perform so back
+
+in the API reference if we want to chat
+
+with chat GPT we will have to translate
+
+this request to the HTTR to workflow
+
+unfortunately if I take this and throw
+
+this into C translate it doesn't work
+
+because maybe there's some issues going
+
+on with the escaping here whatever the
+
+reason we have understood enough from
+
+the examples here to actually assemble
+
+our request ourselves so let's just copy
+
+this into our document and now let's
+
+work on the request that we need so the
+
+first thing is the request it seems like
+
+this is the open AI base URL find by me
+
+let's call this o AI base URL stick this
+
+into your variable and use this variable
+
+in the request and now we need to set
+
+two headers and we have seen in this
+
+example here run it again that there is
+
+this request headers function and we can
+
+simply set stuff by foring this into the
+
+function so let's do that request
+
+headers and then let's use content type
+
+let's put this into quotation marks
+
+because there's a minus in there and
+
+then we set this to application Json
+
+that one we have to put in quotation
+
+marks no matter what but for
+
+authorization we can just stick this in
+
+there without quotation mark and then we
+
+stick in the part that we have seen in
+
+there and with that we have a new
+
+request that has our headers in there it
+
+has the content type and the
+
+authorization and we can even see that
+
+in this scenario the authorization seems
+
+to be redacted so next we have to figure
+
+out how to translate this stuff into an
+
+appropriate form and if we look at this
+
+closely we see that this seems to be
+
+Jason Jesus Christ that's Jason borne it
+
+is the same Jason format we have seen
+
+before so let's check if there is a
+
+request function that does something
+
+with Json and it turns out there is
+
+request body Json and if we look at the
+
+description in the documentation it says
+
+this function sends Json encoded data
+
+since this D flag stands for data or if
+
+we just assume that it does then this
+
+function makes kind of sense as
+
+something to send into our request so
+
+this means that we have to translate
+
+this Json notation into nested list so
+
+if we look into this function it says
+
+that the data is required and this is
+
+the part where we stick in the nested
+
+list okay first thing is model and it
+
+needs to be set to in this case in this
+
+example GPT 3.5 turbo then we have
+
+messages this needs to be a list and
+
+then here is another bracket so we need
+
+another list in there and then we can
+
+set the role to user and the content to
+
+what we want to say in this case we want
+
+chat GPT to say something like say this
+
+is a test that's kind of boring so let's
+
+ask what is
+
+htt2 in the our programming context and
+
+then we still have the temperature so
+
+let's set the temperature and this one
+
+was set to 7 you might be not familiar
+
+with what all of these things mean like
+
+model you might know that this
+
+determines where we use GPT 4 the more
+
+powerful GPT or GPT 3.5 but you may not
+
+be familiar what temperature does
+
+basically this is a parameter that helps
+
+you to control if GPT answers more
+
+creatively or sticks to your
+
+instructions more closely there are a
+
+lot more parameters you could modify and
+
+all of this is documented in the API
+
+documents but here I just wanted to to
+
+give you this little AI information if
+
+you want to play more with this okay so
+
+let's have a look at our request for now
+
+the body says just something like Json
+
+encoded data doesn't matter but what you
+
+can see here is that this became a post
+
+request now you don't need to understand
+
+what this is it's just as a nice
+
+information there get request and post
+
+request htr2 automatically handles what
+
+you need for you I just wanted to point
+
+this out here to appreciate how much
+
+this package does for you so now the
+
+remaining thing we need to do is to
+
+replace this stuff here with an API key
+
+so let's use the glue function so that
+
+we can insert an API key here and then
+
+let's use code in here and there we use
+
+sis. get n and let's say that this
+
+should use a code that is O AI API key
+
+we haven't actually defined this key yet
+
+we haven't set this up in our end file
+
+but we can generate one from open AI to
+
+do so we go to API keys and then then we
+
+could generate a new one I've already
+
+used one but since we cannot see it
+
+anymore let's just generate a new one
+
+htr2 video just so I know to delete this
+
+key later on because obviously you know
+
+my key when you see it so this is why I
+
+will just copy this and delete this
+
+later on and now I can stick this into
+
+myn file and I need to take my code from
+
+before because I need to reload my
+
+environment variables so that this new
+
+variable is loaded into my environment
+
+variables so that this function knows to
+
+how to get this key here and this
+
+reminds me we should also put in a new
+
+line here oh there was actually one so
+
+we don't even need that and now at the
+
+end we can stick in a request perform be
+
+aware that if you set up an API key and
+
+use it like this it will actually cost
+
+you if you execute this code now
+
+provided that I didn't put in a mistake
+
+into the code here right now but if it
+
+runs through you will make a call to the
+
+cat GPT API and this is something which
+
+will cost you it will only be a couple
+
+of cents right now because we're only
+
+doing a small request and the reply
+
+likely won't be huge but just so you're
+
+aware if you don't want to spend any
+
+money at all don't execute this part
+
+here and because I don't want to spend
+
+more money than I have to let's save
+
+this into your variable before we even
+
+make the request so that I don't have to
+
+redo it to get the response later on
+
+okay so if we execute this now takes a
+
+while because might actually think about
+
+stuff well J GPD is not thinking about
+
+stuff I just like to say this kind of
+
+thing there's no thinking involved but
+
+it might calculate for a bit depending
+
+on how much traffic there is but this is
+
+why it can take a second or two to get a
+
+response in any case let's check what we
+
+get as a response we will most of the
+
+time get a Json response so I will just
+
+use this anyway without even checking if
+
+the documentation says otherwise and it
+
+seems that we even got a Jason response
+
+what a surprise let's pass this to the
+
+Glimpse function so this is a list that
+
+we get back and in the usage part of
+
+this list you can see how many so-called
+
+tokens we have used in our prompt that
+
+we passed to CH GPT and how many tokens
+
+it used to answer to our question so in
+
+total we have used 85 tokens and on the
+
+open AI pricing page you can check how
+
+much 1,000 tokens for this particular
+
+model cost again this might even be like
+
+one or two cents that we have used up
+
+here but still if you want to be aware
+
+of the cost check the pricing page and
+
+you can calculate the cost by comparing
+
+with the tokens that you get displayed
+
+here in any case inside of choices and
+
+in the first list there is something
+
+called message so let's head into that
+
+so we go into choices then we go into
+
+the first one then we go into message
+
+and then we pass this to Glimpse and in
+
+there we see that we get another list
+
+with the role assistant namely C GPT
+
+replied and we can extract the content
+
+by going into the content soell and now
+
+if we execute this we get a response
+
+that's says H the our program context y
+
+y it allows to interact with web apis
+
+good enough for me honestly it doesn't
+
+matter what it says we're just worrying
+
+about if it works and it seems we got a
+
+response for our question to chat GPT so
+
+now you're all set to become some AI
+
+genius and and now you can join the AI
+
+gold diggers to I don't know make a
+
+crappy app that just is a wrapper around
+
+cat GPT good luck with that but before
+
+you try that let me show you what you
+
+can do on level four of this video where
+
+we make an even harder request so let's
+
+remove that part here and this part you
+
+can also be removed we know the
+
+structure of the requests by now so in
+
+the last level of this video I want to
+
+show you how to use the hardest kind of
+
+authentication and we practice this by
+
+calling the YouTube data API and since
+
+YouTube is part of Google we can use
+
+this the same project that we have
+
+already used for the geocoding service
+
+that we needed for the we API so inside
+
+of our Cloud console we can just go to
+
+apis and services and inside of this
+
+project check the enabled API and
+
+services and there we can add other apis
+
+and in this case we want to add the
+
+YouTube data API so we search for
+
+YouTube and in there we enable the data
+
+API so we enable this it takes a few
+
+seconds and after that is done you can
+
+generate credentials so on the
+
+credentials page you can click on create
+
+credentials and then make sure that you
+
+create a o off client ID and then it
+
+will tell you that you first need to
+
+configure the consent screen so let's do
+
+that first so we'll just make this
+
+available to any test user with Google
+
+account we'll just make sure that only
+
+our own Google account can use this API
+
+and then we need to put in some name in
+
+there let's call this YouTube data API
+
+video and we need to stick in some
+
+support mail in there I will just use my
+
+Google mail for this and then we can
+
+press save and continue but it actually
+
+won't let us because we need to stick in
+
+the same email into the developer
+
+contact so let's put this in there as
+
+well on the second page you can just hit
+
+save and continue as the test user you
+
+should put in your Google account so
+
+that you can authenticate using your
+
+account then press save and continue
+
+just make sure that in your test users
+
+you use the correct email sometimes
+
+Google mail.com will be for some reason
+
+translated to gmail.com and then you
+
+will get a warning just change that to
+
+Googl mail.com and then you're good to
+
+go but once that is done you have
+
+successfully put up your consent screen
+
+so this means that you can go to
+
+credentials and try again to set up a
+
+client in this case you will want to set
+
+up a web application just give this a
+
+name let's call this YouTube data video
+
+and inside of the authorized redirect
+
+uis put in Local Host so you will need
+
+an HTTP code back SLB SL localhost colon
+
+and then some number doesn't matter what
+
+number you put in there but you need to
+
+remember that number and once you've
+
+done that you get a successful screen
+
+and in there you can download all client
+
+secret and so on as ad Json once again
+
+you can see all of this because I'm
+
+showing you my keys I will delete
+
+everything this whole project after this
+
+video once again keep all your client
+
+IDs and secret secret to yourself don't
+
+give that to anyone and in this Json
+
+file you have a whole lot of stuff and
+
+this is the stuff we will need to make
+
+sure that the htt2 package can
+
+authenticate using the client we've just
+
+set up so let us head to our studio and
+
+set up our environment variables we need
+
+one for the client ID and the secret so
+
+let's call this YouTube client ID and in
+
+there we get the stuff from the client
+
+ID field it says client ID here and then
+
+we need one for the secret YouTube
+
+client secret and where it says client
+
+Secret we can get the key and insert
+
+this in here and now we have all the
+
+things ready to set up the client with
+
+HTTR 2 so what we need is another code
+
+chunk and the first thing we do is to
+
+reload our environment again and then we
+
+set up the client using the
+
+corresponding function from the package
+
+and you can see here that it needs a
+
+couple of arguments it needs ID a token
+
+URL a secret and some other stuff the
+
+other stuff seems to be not necessary
+
+but ID token URL and is necessary so
+
+let's stick that in there for the ID we
+
+use the client ID that we've just saved
+
+into environment variable for the token
+
+URL we actually need to get something
+
+that looks like this and in case you're
+
+wondering where we got that from this is
+
+also part of the Json file in there
+
+somewhere it says token URI and this is
+
+exactly the thing I used to stick in
+
+here and then we need the secret which
+
+we get in the way we already know by now
+
+and if we execute this we get an error
+
+because I forgot to change the path of
+
+the load function for the environment
+
+file but now everything works smoothly
+
+and we have a client that can interact
+
+with the YouTube API you don't need to
+
+understand all of these things what is
+
+happening behind the scenes you just
+
+need to know all the parts that where
+
+you need to stick stuff into like the
+
+client ID and where you get the token
+
+URL and after that the HTTR 2 package
+
+will handle all the things for you the
+
+next thing we need is a YouTube video so
+
+that we can get some data for it to make
+
+sure that we're using something publicly
+
+available and not something from my own
+
+channel where I might not be sure if you
+
+can access the data let's just get one
+
+from Ali abdal and inside of that URL
+
+you will find the ID of that video and
+
+this is the part we need for the YouTube
+
+data API so let's save this into a
+
+variable let's call it video ID and then
+
+we need to figure out what the base URL
+
+of the YouTube data API is so we have to
+
+Google to figure this out and and
+
+depending on what we want to do you we
+
+have completely different base URLs in
+
+this case we look for something which
+
+lists videos and it can according to
+
+this description it retries information
+
+about a specific video and it uses the
+
+ID to identify the video seems like it's
+
+the one that we need don't get
+
+discouraged if you click through these
+
+documents and don't know where to go
+
+next and figure things out it usually
+
+takes a while it takes me forever
+
+whenever I want to work with the YouTube
+
+API it's just what it is these documents
+
+are not easily digestible so you will
+
+just have to live with that this is not
+
+particularly easy but at the end of the
+
+day you just have to figure out what the
+
+correct thing is you need to call and
+
+from there you can get the URL and at
+
+the bottom it will tell you that you
+
+need something like part in this case
+
+this is a required parameter and in
+
+there there's usually a list of things
+
+that we can stick into part like ID or
+
+snippet or statistics or whatever and
+
+then there are some other stuff that you
+
+can try try out in our case we just have
+
+to save the URL into a variable and then
+
+we can stick that into request and pass
+
+the request to the URL query where we
+
+stick in the things that we want to add
+
+to the link and in this case it is part
+
+which we set to statistics and ID which
+
+we set to video and in case you're
+
+wondering how did I know that we need
+
+request URL query the thing is the
+
+YouTube API documentation isn't super
+
+great but it has some interactive
+
+Explorer and in there you can click on
+
+show code and it will show you what you
+
+need and you can see here that it uses
+
+the same syntax that we've already seen
+
+with the question mark and then key and
+
+setting stuff to whatever you can ignore
+
+most of this but if you for example put
+
+in statistics into part you see that it
+
+seems to append the part to the URL as a
+
+query so this is how I knew that we will
+
+need the request URL query function and
+
+from there it was easy to assemble this
+
+part here let's just execute all of this
+
+and then we see that we have a request
+
+already but we need to equip it with the
+
+authentication with the client that
+
+we've just set up and this is where
+
+another request function comes in namely
+
+the function that can handle this kind
+
+of authentication and if we look at the
+
+documentation it needs a client that's
+
+good for us we have just set up a client
+
+it needs a URL and stuff like scope and
+
+so on so let's stick these kind of
+
+things into the arguments and then I
+
+will tell you where I got what from so
+
+I'll put in the request for the client
+
+I'll put in the scope I put in the
+
+authentication URL and I put in the port
+
+so you may Wonder let me make this a
+
+little bit larger you may wonder where
+
+did I get this part from and the
+
+authentication URL the URL this was
+
+actually pretty easy it is also in the
+
+Json file you can find it here it says
+
+off URI and this is the one I have
+
+sticked into this part here the port is
+
+the number I have used in the redirect
+
+URI you see if you go into the console
+
+the number that I have used in this
+
+authorized redirect URI this is the
+
+number I have used here and for the
+
+scope this is something like the
+
+permissions that you need I have just
+
+used the API documents I've just used
+
+them in the search bar I've just put in
+
+Scopes and then I clicked on the first
+
+thing and scrolled all the way down
+
+until I hit a list that tells me the
+
+YouTube data API uses the following
+
+Scopes and here I've just used one that
+
+was appropriate for what we want to do
+
+we just want to view stuff from YouTube
+
+okay so this is why we just use the
+
+scope and now that that all is said we
+
+can perform the request and now if we
+
+execute this code we actually get an
+
+error it says something here redirect
+
+URI mismatch so we have to go back into
+
+the console and check what's going on
+
+there and then here it's a really dumb
+
+mistake we forgot to add a slash at the
+
+end for some reason these kind of things
+
+are really allergic to stuff like this
+
+and now if we abort the authentication
+
+and retry it then we at least get to to
+
+a window where we can choose stuff so
+
+let's let choose one account it will
+
+tell you this app isn't verified do you
+
+want to continue yeah we want to do that
+
+we give rights to view the YouTube
+
+account this was inside of the Scopes we
+
+specified and then it says
+
+authentication is complete please close
+
+this page and return to R all right
+
+thank you will do and now we see that
+
+there is a response and we have a status
+
+to 200 so let us save this into a
+
+response variable let's just call this
+
+YouTube response and now we can evaluate
+
+this stuff like we did before so let's
+
+put in response body Json let's test
+
+this to Glimpse and in there we can see
+
+that statistics is hidden inside of the
+
+items in the first list and then come
+
+statistics so let's do that plug items
+
+first one and then statistics and then
+
+we see here that there is a view count
+
+of
+
+1.47 million a like count of
+
+approximately 40,000 so I guess good for
+
+Ali he has a lot of views and a lot of
+
+likes my channel is not quite there yet
+
+but there's always time make sure to
+
+watch all of my videos to get my numbers
+
+close to these ones here but in any case
+
+with that we have figured out how to do
+
+this hard authentication which has a lot
+
+of moving parts so don't worry you
+
+probably have to revisit a couple of
+
+steps I did to see what I did where but
+
+this still should give you blueprint to
+
+how to do all kinds of authentication
+
+but let me show you one more trick that
+
+will help you to cash Keys you see
+
+this authentication needs to be repeated
+
+a couple of times but if at some point
+
+you hit on the wrong account for some
+
+authentication then you might have to
+
+redo the authentication but since the
+
+key is usually cashed you won't get
+
+asked again which account do you want to
+
+use for authentication so this is why if
+
+you put in the cach key argument here
+
+and put this to some string then you can
+
+reauthenticate again you might have to
+
+log out of your Google account and then
+
+log back again to avoid getting this
+
+authentication complete immediately but
+
+this is still a trick that you can try
+
+out if you run into some debugging
+
+issues when you think your code is
+
+correct but for some reasons you get an
+
+access denied which is something that
+
+happened to me so that's why I'm telling
+
+you that but in any case this completes
+
+our journey through the htt2 package if
+
+you have any questions feel free to drop
+
+them into the comments and if you want
+
+to see more videos like this check out
+
+this web development 4r video series or
+
+check out this video where I show you
+
+how to create some cool data
+
+visualizations in any case thank you for
+
+watching and I will see you in the next
+
+video
+
+
